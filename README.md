@@ -63,8 +63,12 @@ php bin/console doctrine:database:create
 
 php bin/console doctrine:migrations:migrate
 
+```
+o sino
 
-o php bin/console doctrine:schema:update --force
+
+```bash
+php bin/console doctrine:schema:update --force
 ```
 
 
@@ -98,5 +102,7 @@ PHP 8.2
 JavaScript / CSS
 
 👨‍💻 Autor
+
+
 Benjamin Desarrollador web y analista de sistemas en formación. Especializado en Symfony, Python, Vue.js y pedagogía técnica.
 
