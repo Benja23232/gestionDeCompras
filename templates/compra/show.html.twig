@@ -1,0 +1,242 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compra{% endblock %}
+
+{% block body %}
+<style>
+    body {
+        background: linear-gradient(to right, #e3f2fd, #fce4ec);
+        font-family: 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .compra-wrapper {
+        max-width: 900px;
+        margin: 3em auto;
+        padding: 2.5em;
+        background-color: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+
+    .compra-wrapper h1 {
+        font-size: 2em;
+        margin-bottom: 1.5em;
+        text-align: center;
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 2em;
+    }
+
+    th, td {
+        padding: 0.9em;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        vertical-align: top;
+    }
+
+    td {
+        color: gray;
+    }
+
+    th {
+        background-color: #f1f1f1;
+        font-weight: 600;
+        color: #444;
+        width: 25%;
+    }
+
+    .productos-lista {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.2em;
+        margin-top: 1em;
+    }
+
+    .producto-card {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 1em 1.2em;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        color: #333;
+    }
+
+    .producto-card h3 {
+        margin-top: 0;
+        color: #1976d2;
+        font-size: 1.2em;
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+    }
+
+    .producto-card p {
+        margin: 0.4em 0;
+        font-size: 0.95em;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 1em;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn-link {
+        padding: 0.6em 1.2em;
+        border: 2px solid #1976d2;
+        border-radius: 8px;
+        color: #ffffff;
+        background-color: #1976d2;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-link:hover {
+        background-color: #e3f2fd;
+        border-color: #1565c0;
+        color: #1565c0;
+    }
+
+    .contenedor-eliminar {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .btn-delete {
+        padding: 0.6em 1.2em;
+        border: 2px solid #d32f2f;
+        border-radius: 8px;
+        color: #ffffff;
+        background-color: #d32f2f;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-delete:hover {
+        background-color: #fbe9e7;
+        border-color: #c62828;
+        color: #c62828;
+    }
+
+    @media screen and (max-width: 600px) {
+        .compra-wrapper {
+            padding: 1.5em;
+            margin: 1.5em auto;
+            border-radius: 12px;
+        }
+
+        .compra-wrapper h1 {
+            font-size: 1.5em;
+        }
+
+        table, thead, tbody, th, td, tr {
+            display: block;
+        }
+
+        th {
+            background-color: transparent;
+            padding-top: 1em;
+            font-size: 0.95em;
+        }
+
+        td {
+            padding: 0.4em 0;
+            font-size: 0.95em;
+        }
+
+        tr {
+            margin-bottom: 1em;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .contenedor-eliminar {
+            justify-content: center;
+            margin-top: 1em;
+        }
+
+        .btn-delete {
+            width: 100%;
+            text-align: center;
+            font-size: 1em;
+            padding: 0.8em 1em;
+            border-radius: 10px;
+        }
+
+        .producto-card {
+            padding: 0.8em;
+            font-size: 0.95em;
+        }
+
+        .producto-card h3 {
+            font-size: 1.1em;
+        }
+    }
+</style>
+
+<div class="compra-wrapper">
+    <h1>Detalle de la compra</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ compra.nombre }}</td>
+            </tr>
+            <tr style="display:none;">
+                <th>Id</th>
+                <td>{{ compra.id }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ compra.fecha ? compra.fecha|date('d/m/Y H:i') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Productos</th>
+                <td>
+                    <div class="productos-lista">
+                        {% for producto in compra.productos %}
+                            <div class="producto-card">
+                                <h3><i class="fas fa-box"></i> {{ producto.nombre }}</h3>
+                                <p><strong>Precio:</strong> ${{ producto.precio|number_format(2, '.', ',') }}</p>
+                                <p><strong>Descuento:</strong> ${{ producto.descuento|number_format(2, '.', ',') }}</p>
+                                <p><strong>Total:</strong> ${{ producto.total|number_format(2, '.', ',') }}</p>
+                                <p><strong>Consumido por:</strong>
+                                    {% if producto.consumidores|length > 0 %}
+                                        {% for usuario in producto.consumidores %}
+                                            {{ usuario.email }}{% if not loop.last %}, {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <em>Sin consumidores</em>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        {% else %}
+                            <div class="producto-card">
+                                <em>No hay productos asociados a esta compra.</em>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="btn-group">
+        <a href="{{ path('app_compra_index') }}" class="btn-link">Volver al listado</a>
+        <a href="{{ path('app_compra_edit', {'id': compra.id}) }}" class="btn-link">Editar</a>
+    </div>
+
+    <div class="contenedor-eliminar">
+        {{ include('compra/_delete_form.html.twig') }}
+    </div>
+</div>
+{% endblock %}

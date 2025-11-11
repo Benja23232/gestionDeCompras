@@ -1,0 +1,184 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar compra{% endblock %}
+
+{% block body %}
+<style>
+    body {
+        font-family: 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .edit-wrapper {
+        max-width: 900px;
+        margin: 3em auto;
+        padding: 2.5em;
+        background-color: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+
+    .edit-wrapper h1 {
+        font-size: 2em;
+        margin-bottom: 1.5em;
+        text-align: center;
+        color: #333;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5em;
+    }
+
+    label {
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 0.4em;
+        display: block;
+        font-size: 1em;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="datetime-local"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 0.8em;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 1em;
+        background-color: #f9f9f9;
+        transition: border-color 0.3s ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+        border-color: #1976d2;
+        outline: none;
+        background-color: #fff;
+    }
+
+    .producto-form {
+        padding: 1em;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        background-color: #f5f5f5;
+        margin-bottom: 1em;
+    }
+
+    #productos-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+    }
+
+    button[type="submit"],
+    .btn-agregar {
+        padding: 0.8em 1.5em;
+        border: none;
+        border-radius: 8px;
+        background-color: #1976d2;
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        align-self: flex-start;
+    }
+
+    button[type="submit"]:hover,
+    .btn-agregar:hover {
+        background-color: #1565c0;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 1em;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 2em;
+    }
+
+    .btn-link {
+        padding: 0.6em 1.2em;
+        border: 2px solid #1976d2;
+        border-radius: 8px;
+        background-color: #1976d2;
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-link:hover {
+        background-color: #e3f2fd;
+        border-color: #1565c0;
+        color: #1565c0;
+    }
+
+    .btn-delete {
+        padding: 0.6em 1.2em;
+        border: 2px solid #d32f2f;
+        border-radius: 8px;
+        background-color: #ffffff;
+        color: #d32f2f;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-delete:hover {
+        background-color: #fbe9e7;
+        border-color: #c62828;
+        color: #c62828;
+    }
+
+    @media screen and (max-width: 600px) {
+        .edit-wrapper {
+            padding: 1.5em;
+            margin: 1.5em auto;
+            border-radius: 12px;
+        }
+
+        .edit-wrapper h1 {
+            font-size: 1.5em;
+        }
+
+        form {
+            gap: 1em;
+        }
+
+        .producto-form {
+            padding: 0.8em;
+        }
+
+        button[type="submit"],
+        .btn-agregar,
+        .btn-link,
+        .btn-delete {
+            width: 100%;
+            text-align: center;
+            font-size: 1em;
+        }
+
+        .btn-group {
+            flex-direction: column;
+            align-items: stretch;
+        }
+    }
+</style>
+
+<div class="edit-wrapper">
+    <h1>Editar compra</h1>
+
+    {{ include('compra/_form.html.twig', {'button_label': 'Actualizar'}) }}
+
+    <div class="btn-group">
+        <a href="{{ path('app_compra_index') }}" class="btn-link">Volver al listado</a>
+        {{ include('compra/_delete_form.html.twig') }}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{{ form_start(form) }}
+    {{ form_row(form.nombre) }}
+    {{ form_row(form.fecha) }}
+
+   <!-- <h3>Productos comprados</h3>-->
+    <div id="productos-wrapper" data-prototype="{{ form_widget(form.productos.vars.prototype)|e('html_attr') }}">
+        {% for productoForm in form.productos %}
+            <div class="producto-form">
+                {{ form_widget(productoForm) }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <button type="submit">Guardar compra</button>
+{{ form_end(form) }}
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const wrapper = document.querySelector('#productos-wrapper');
+        const addButton = document.createElement('button');
+        addButton.type = 'button';
+        addButton.textContent = 'Agregar producto';
+        addButton.classList.add('btn', 'btn-secondary', 'mt-3');
+        wrapper.parentNode.insertBefore(addButton, wrapper.nextSibling);
+
+        let index = wrapper.children.length;
+
+        addButton.addEventListener('click', () => {
+            const prototype = wrapper.dataset.prototype;
+            const newForm = prototype.replace(/__name__/g, index);
+            const div = document.createElement('div');
+            div.classList.add('producto-form');
+            div.innerHTML = newForm;
+            wrapper.appendChild(div);
+            index++;
+        });
+    });
+</script>

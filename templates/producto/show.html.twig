@@ -1,0 +1,167 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Detalle del producto{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+    body {
+        background: linear-gradient(to right, #fce4ec, #e3f2fd);
+        font-family: 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .producto-wrapper {
+        max-width: 800px;
+        margin: 3em auto;
+        padding: 2em;
+        background-color: #fff;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+
+    .producto-wrapper h1 {
+        font-size: 2em;
+        margin-bottom: 1.5em;
+        text-align: center;
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 2em;
+    }
+
+    th, td {
+        padding: 0.9em;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        vertical-align: top;
+    }
+
+    th {
+        background-color: #f1f1f1;
+        font-weight: 600;
+        color: #444;
+        width: 30%;
+    }
+
+    td {
+        color: #333;
+    }
+
+    ul {
+        margin: 0;
+        padding-left: 1.2em;
+    }
+
+    .acciones {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1em;
+    }
+
+    .acciones a {
+        display: inline-block;
+        padding: 0.6em 1.2em;
+        background-color: #1976d2;
+        color: #fff;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+    }
+
+    .acciones a:hover {
+        background-color: #125ea2;
+    }
+
+    @media screen and (max-width: 600px) {
+        .producto-wrapper {
+            padding: 1.5em;
+        }
+
+        .producto-wrapper h1 {
+            font-size: 1.5em;
+        }
+
+        table, thead, tbody, th, td, tr {
+            display: block;
+        }
+
+        tr {
+            margin-bottom: 1em;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            padding: 1em;
+        }
+
+        th {
+            background-color: transparent;
+            font-weight: bold;
+            padding: 0.4em 0;
+        }
+
+        td {
+            padding: 0.4em 0;
+        }
+
+        .acciones {
+            flex-direction: column;
+            align-items: stretch;
+        }
+    }
+</style>
+
+<div class="producto-wrapper">
+    <h1><i class="fas fa-box-open"></i> Detalle del producto</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>ID</th>
+                <td>{{ producto.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ producto.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Precio</th>
+                <td>${{ producto.precio|number_format(2, '.', ',') }}</td>
+            </tr>
+            <tr>
+                <th>Descuento</th>
+                <td>{{ producto.descuento }}%</td>
+            </tr>
+            <tr>
+                <th>Total</th>
+                <td>${{ producto.total|number_format(2, '.', ',') }}</td>
+            </tr>
+            <tr>
+                <th>Consumidores</th>
+                <td>
+                    {% if producto.consumidores|length > 0 %}
+                        <ul>
+                            {% for consumidor in producto.consumidores %}
+                                <li>{{ consumidor.nombre }} ({{ consumidor.email }})</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <em>No hay consumidores asignados.</em>
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="acciones">
+        <a href="{{ path('app_producto_index') }}"><i class="fas fa-arrow-left"></i> Volver al listado</a>
+        <a href="{{ path('app_producto_edit', {'id': producto.id}) }}"><i class="fas fa-edit"></i> Editar</a>
+        {{ include('producto/_delete_form.html.twig') }}
+    </div>
+</div>
+{% endblock %}

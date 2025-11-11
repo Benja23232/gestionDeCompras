@@ -1,0 +1,132 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listado de pagos{% endblock %}
+
+{% block body %}
+<!-- Font Awesome para íconos -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+    body {
+        background: linear-gradient(to right, #e3f2fd, #fce4ec);
+        font-family: 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .table-wrapper {
+        max-width: 1000px;
+        margin: 3em auto;
+        padding: 2em;
+        background-color: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+
+    .table-wrapper h1 {
+        font-size: 2em;
+        margin-bottom: 1.5em;
+        text-align: center;
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1.5em;
+    }
+
+    th, td {
+        padding: 0.8em;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    td{
+        color:gray;
+    }
+
+    th {
+        background-color: #f1f1f1;
+        font-weight: 600;
+        color: #444;
+    }
+
+    tr:hover {
+        background-color: #f9f9f9;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 0.5em 1em;
+        font-size: 0.9em;
+        border-radius: 6px;
+        text-decoration: none;
+        color: white;
+        background-color: #1976d2;
+        transition: background-color 0.2s ease;
+        margin-right: 0.5em;
+    }
+
+    .btn:hover {
+        background-color: #0d47a1;
+    }
+
+    .btn-secondary {
+        background-color: #9e9e9e;
+    }
+
+    .btn-secondary:hover {
+        background-color: #616161;
+    }
+
+    .btn-create {
+        background-color: #43a047;
+    }
+
+    .btn-create:hover {
+        background-color: #2e7d32;
+    }
+
+    .no-records {
+        text-align: center;
+        padding: 2em;
+        color: #777;
+    }
+</style>
+
+<div class="table-wrapper">
+    <h1><i class="fas fa-money-check-alt"></i> Listado de pagos</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Monto</th>
+                <th>Fecha</th>
+                <th>Pagador</th>
+                <th>Receptor</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pago in pagos %}
+            <tr>
+                <td>{{ pago.id }}</td>
+                <td>${{ pago.monto }}</td>
+                <td>{{ pago.fecha ? pago.fecha|date('d/m/Y') : '' }}</td>
+                <td>{{ pago.pagador.email }}</td>
+                <td>{{ pago.receptor.email }}</td>
+                <td>
+                    <a href="{{ path('app_pago_show', {'id': pago.id}) }}" class="btn"><i class="fas fa-eye"></i></a>
+                    <a href="{{ path('app_pago_edit', {'id': pago.id}) }}" class="btn btn-secondary"><i class="fas fa-edit"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6" class="no-records">No se encontraron pagos registrados.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_pago_new') }}" class="btn btn-create"><i class="fas fa-plus-circle"></i> Registrar nuevo pago</a>
+</div>
+{% endblock %}

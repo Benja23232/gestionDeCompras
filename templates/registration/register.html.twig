@@ -1,0 +1,145 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registro{% endblock %}
+
+{% block body %}
+<style>
+    body {
+        font-family: 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .register-wrapper {
+        max-width: 420px;
+        margin: 4em auto;
+        padding: 2.5em;
+        background-color: #fff;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+
+    .register-wrapper h1 {
+        font-size: 1.8em;
+        margin-bottom: 1.5em;
+        text-align: center;
+        color: #333;
+    }
+    li{
+        list-style: none;
+        color:rgb(212, 15, 15);
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5em;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group label {
+        font-weight: 600;
+        margin-bottom: 0.4em;
+        color: #555;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.8em;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 1em;
+        background-color: #f9f9f9;
+        box-sizing: border-box;
+        appearance: none;
+    }
+
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 0.6em;
+        font-size: 0.95em;
+        color: #555;
+    }
+
+    .form-error-message {
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 1em;
+        border-radius: 8px;
+        margin-bottom: 1em;
+        font-size: 0.95em;
+    }
+
+    .btn-register {
+        padding: 0.8em;
+        font-size: 1em;
+        border: 2px solid #1976d2;
+        border-radius: 8px;
+        color: #ffffff;
+        background-color: #1976d2;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-register:hover {
+        background-color: #e3f2fd;
+        border-color: #1565c0;
+        color: #1565c0;
+    }
+
+    @media screen and (max-width: 480px) {
+        .register-wrapper {
+            margin: 2em 1em;
+            padding: 2em;
+            border-radius: 12px;
+        }
+
+        .register-wrapper h1 {
+            font-size: 1.5em;
+        }
+
+        .btn-register {
+            font-size: 0.95em;
+        }
+    }
+</style>
+
+<div class="register-wrapper">
+    <h1>Crear cuenta</h1>
+
+    {% if registrationForm.vars.errors|length > 0 %}
+        <div class="form-error-message">
+            {{ form_errors(registrationForm) }}
+        </div>
+    {% endif %}
+
+    {{ form_start(registrationForm) }}
+        <div class="form-group">
+            {{ form_label(registrationForm.nombre) }}
+            {{ form_widget(registrationForm.nombre, { attr: { class: 'form-control' } }) }}
+            {{ form_errors(registrationForm.nombre) }}
+        </div> 
+        <div class="form-group">
+            {{ form_label(registrationForm.email) }}
+            {{ form_widget(registrationForm.email, { attr: { class: 'form-control' } }) }}
+            {{ form_errors(registrationForm.email) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(registrationForm.plainPassword) }}
+            {{ form_widget(registrationForm.plainPassword, { attr: { class: 'form-control' } }) }}
+            {{ form_errors(registrationForm.plainPassword) }}
+        </div>
+
+        <div class="checkbox-group">
+            {{ form_widget(registrationForm.agreeTerms) }}
+            <label for="{{ registrationForm.agreeTerms.vars.id }}">Acepto los términos</label>
+        </div>
+        {{ form_errors(registrationForm.agreeTerms) }}
+
+        <button type="submit" class="btn-register">Registrarme</button>
+    {{ form_end(registrationForm) }}
+</div>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmación de pago{% endblock %}
+
+{% block body %}
+<!-- Font Awesome para íconos -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+    body {
+       
+        font-family: 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .confirmacion-wrapper {
+        max-width: 600px;
+        margin: 3em auto;
+        padding: 2.5em;
+        background-color: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    .confirmacion-wrapper h1 {
+        font-size: 2em;
+        margin-bottom: 1.5em;
+        color: #333;
+    }
+
+    .confirmacion-wrapper p {
+        font-size: 1.1em;
+        margin: 0.8em 0;
+        color: #444;
+    }
+
+    .confirmacion-wrapper hr {
+        margin: 2em 0;
+        border: none;
+        border-top: 1px solid #ddd;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 0.7em 1.4em;
+        font-size: 1em;
+        border-radius: 8px;
+        text-decoration: none;
+        color: white;
+        background-color: #1976d2;
+        transition: background-color 0.2s ease;
+        margin-top: 1.5em;
+    }
+
+    .btn:hover {
+        background-color: #0d47a1;
+    }
+
+    @media screen and (max-width: 600px) {
+        .confirmacion-wrapper {
+            padding: 1.5em;
+            margin: 1.5em auto;
+            border-radius: 12px;
+        }
+
+        .confirmacion-wrapper h1 {
+            font-size: 1.5em;
+        }
+
+        .confirmacion-wrapper p {
+            font-size: 1em;
+        }
+
+        .btn {
+        display: block;
+        width: 80%;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    }
+</style>
+
+<div class="confirmacion-wrapper">
+    <h1><i class="fas fa-check-circle" style="color: #43a047;"></i> Pago registrado</h1>
+
+    <p><strong>Pagador:</strong> {{ pago.pagador.email }}</p>
+    <p><strong>Receptor:</strong> {{ pago.receptor.email }}</p>
+    <p><strong>Monto:</strong> ${{ pago.monto }}</p>
+    <p><strong>Fecha:</strong> {{ pago.fecha|date('d/m/Y') }}</p>
+
+    <hr>
+
+    <p><strong>Saldo restante entre {{ pago.pagador.email}} y {{ pago.receptor.email }}:</strong>
+        ${{ saldoRestante }}</p>
+
+    <a href="{{ path('app_pago_index') }}" class="btn"><i class="fas fa-arrow-left"></i> Volver al listado</a>
+</div>
+{% endblock %}
