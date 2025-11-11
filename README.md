@@ -38,3 +38,65 @@ composer install
 ```
 
 
+3. Configurar entorno
+Copiar el archivo .env.example a .env y ajustar la conexión a la base de datos:
+
+```bash
+
+
+cp .env.example .env
+
+```
+
+env
+APP_ENV=dev
+APP_SECRET=CHANGE_ME
+DATABASE_URL="mysql://root@127.0.0.1:3306/proyec?serverVersion=10.4&charset=utf8mb4"
+
+
+4. Crear la base de datos
+```bash
+
+
+php bin/console doctrine:database:create
+
+
+php bin/console doctrine:migrations:migrate
+
+
+o php bin/console doctrine:schema:update --force
+```
+
+
+🖥️ Uso
+Levantar el servidor local de Symfony:
+
+```bash
+
+
+symfony server:start
+
+
+Acceder en el navegador:
+http://127.0.0.1:8000
+```
+
+
+📌 Tecnologías utilizadas
+Symfony 6
+
+Doctrine ORM
+
+Twig
+
+Composer
+
+MySQL/MariaDB
+
+PHP 8.2
+
+JavaScript / CSS
+
+👨‍💻 Autor
+Benjamin Desarrollador web y analista de sistemas en formación. Especializado en Symfony, Python, Vue.js y pedagogía técnica.
+
