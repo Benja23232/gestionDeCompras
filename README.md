@@ -26,6 +26,8 @@ git clone https://github.com/Benja23232/gestionDeCompras.git
 
 cd gestionDeCompras
 
+```
+
 2. Instalar dependencias
 
 
@@ -33,3 +35,6 @@ cd gestionDeCompras
 
 
 composer install
+```
+
+
